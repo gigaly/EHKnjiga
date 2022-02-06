@@ -19,7 +19,7 @@ On Error GoTo 0
 Exit Function
 
 popravak:
-  MsgBox "Došlo je do pogreške " & Err.Number
+  MsgBox "Doï¿½lo je do pogreï¿½ke " & Err.Number
 
 End Function
 
@@ -33,13 +33,13 @@ On Error GoTo popravak
   DoCmd.RunSQL (naredba)
 On Error GoTo 0
 
-MsgBox "1. sluèaj:" & vbCrLf & "Tablica uspješno kreirana."
+MsgBox "1. sluï¿½aj:" & vbCrLf & "Tablica uspjeï¿½no kreirana."
 Exit Function
 
 popravak:
   naredba = "DROP TABLE primjer_01_02;"
   DoCmd.RunSQL (naredba)
-  MsgBox "2. sluèaj:" & vbCrLf & "Došlo je do pogreške " & Err.Number & " pa je tablica obrisana"
+  MsgBox "2. sluï¿½aj:" & vbCrLf & "Doï¿½lo je do pogreï¿½ke " & Err.Number & " pa je tablica obrisana"
 
 End Function
 
@@ -64,7 +64,7 @@ Exit Function
 
 popravak:
   If Err.Number = 3211 Then
-    status = "Tablica zakljuèana i ne može se obrisati"
+    status = "Tablica zakljuï¿½ana i ne moï¿½e se obrisati"
   End If
   If Err.Number = 3376 Then
     status = "Tablica ne postoji"

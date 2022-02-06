@@ -5,9 +5,9 @@ Public Function napravi_tablicu_koordinatiziranih_pojmova(NazivTablice As String
 Dim naredba As String
 naredba = _
   " CREATE TABLE [%1%] " & _
-  " ( ID Integer, Rijeè Text(50), " & _
+  " ( ID Integer, Rijeï¿½ Text(50), " & _
   " [ID prijevoda] Integer,  Mjesto SmallInt, " & _
-  " [Opæenita vrsta rijeèi] Text(50), [Opæenita VR] Text(50), " & _
+  " [Opï¿½enita vrsta rijeï¿½i] Text(50), [Opï¿½enita VR] Text(50), " & _
   " Pojam Text(50), Pojam2 Text(50) );"
 naredba = Replace(naredba, "%1%", NazivTablice)
 DoCmd.RunSQL (naredba)
@@ -54,10 +54,13 @@ Do While Not tc.EOF
       
   For i = 0 To UBound(p)
     brojac = brojac + 1
-    If brojac Mod 1000 = 0 Then Debug.Print brojac
+    If brojac Mod 1000 = 0 Then
+      Debug.Print brojac
+      DoEvents
+    End If
     tc2.AddNew
     tc2("ID") = brojac
-    tc2("Rijeè") = p(i)
+    tc2("Rijeï¿½") = p(i)
     tc2("ID prijevoda") = tc("ID")
     tc2("Mjesto") = i + 1
     tc2("Pojam") = t

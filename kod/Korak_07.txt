@@ -4,10 +4,10 @@ Option Explicit
 Public Function napravi_popis_svih_rijeci(SveRijeci As String, KoordinatiziraniPojmovi As String)
 
 Dim naredba As String
-naredba = "SELECT Rijeè, Count(ID) AS CountOfID, " & _
-          " '' AS [Opæenita Vrsta rijeèi], '' AS [Opæenita VR] " & _
-          " INTO [%1%] FROM [%2%] GROUP BY Rijeè;"
-naredba = Replace(naredba, "%1%", SveRijeci)
+naredba = "SELECT Rijeï¿½, Count(ID) AS CountOfID, " & _
+          " '' AS [Opï¿½enita Vrsta rijeï¿½i], '' AS [Opï¿½enita VR] " & _
+          " INTO [%1%] FROM [%2%] GROUP BY Rijeï¿½;"
+naredba = Replace(naredba, "%1%", SveRijeï¿½i)
 naredba = Replace(naredba, "%2%", KoordinatiziraniPojmovi)
 DoCmd.SetWarnings False
 DoCmd.RunSQL (naredba)
@@ -21,14 +21,14 @@ Dim vr As New Scripting.Dictionary, k As Variant
 Dim tc As DAO.Recordset
 
 vr("broj") = "B"
-vr("èestica") = "È"
-vr("èlan") = "A"
+vr("ï¿½estica") = "ï¿½"
+vr("ï¿½lan") = "A"
 vr("glagol") = "G"
 vr("imenica") = "I"
 vr("kratica") = "K"
 vr("nastavak") = "N"
 vr("onomatopeja") = "O"
-vr("pomoæni glagol") = "M"
+vr("pomoï¿½ni glagol") = "M"
 vr("prefiks") = "F"
 vr("pridjev") = "D"
 vr("prijedlog") = "J"
@@ -39,13 +39,13 @@ vr("veznik") = "V"
 vr("x") = "X"
 vr("zamjenica") = "Z"
 
-naredba = " CREATE TABLE [VR kratko] ( [Vrsta rijeèi] Text(20), Kratica Text(1) );"
+naredba = " CREATE TABLE [VR kratko] ( [Vrsta rijeï¿½i] Text(20), Kratica Text(1) );"
 DoCmd.RunSQL (naredba)
 
 Set tc = CodeDb.OpenRecordset("VR kratko")
 For Each k In vr.Keys
   tc.AddNew
-  tc("Vrsta rijeèi") = k
+  tc("Vrsta rijeï¿½i") = k
   tc("Kratica") = vr(k)
   tc.Update
 Next
@@ -60,11 +60,11 @@ Dim rijec As String, novaRijec As String
 Dim opcenitaVrstaRijeci As String, opcenitaVR As String, brojac As Long
 
 
-upit = " SELECT Rijeè, Promjena, Kratica " & _
+upit = " SELECT Rijeï¿½, Promjena, Kratica " & _
        " FROM ([%1%] LEFT JOIN [%2%] " & _
-       " ON [%1%].Rijeè = [%2%].[Kosi oblik]) " & _
-       " LEFT JOIN [VR kratko] ON [%2%].[Vrsta rijeèi] = [VR kratko].[Vrsta rijeèi] " & _
-       " ORDER BY Rijeè, Promjena, Kratica;"
+       " ON [%1%].Rijeï¿½ = [%2%].[Kosi oblik]) " & _
+       " LEFT JOIN [VR kratko] ON [%2%].[Vrsta rijeï¿½i] = [VR kratko].[Vrsta rijeï¿½i] " & _
+       " ORDER BY Rijeï¿½, Promjena, Kratica;"
 upit = Replace(upit, "%1%", Tablica)
 upit = Replace(upit, "%2%", JednojezicniRjecnik)
 
@@ -79,12 +79,12 @@ opcenitaVrstaRijeci = ""
 opcenitaVR = ""
 brojac = 0
 Do While Not tc2.EOF And Not tc.EOF
-  novaRijec = Trim(tc("Rijeè"))
+  novaRijec = Trim(tc("Rijeï¿½"))
   If novaRijec <> rijec Then
     If rijec <> "" Then
       tc2.Edit
-      tc2("Opæenita vrsta rijeèi") = opcenitaVrstaRijeci
-      tc2("Opæenita VR") = opcenitaVR
+      tc2("Opï¿½enita vrsta rijeï¿½i") = opcenitaVrstaRijeci
+      tc2("Opï¿½enita VR") = opcenitaVR
       tc2.Update
       tc2.MoveNext
     End If
@@ -102,9 +102,9 @@ Do While Not tc2.EOF And Not tc.EOF
 Loop
 
 tc2.Edit
-tc2("Rijeè") = rijec
-tc2("Opæenita vrsta rijeèi") = opcenitaVrstaRijeci
-tc2("Opæenita VR") = opcenitaVR
+tc2("Rijeï¿½") = rijec
+tc2("Opï¿½enita vrsta rijeï¿½i") = opcenitaVrstaRijeci
+tc2("Opï¿½enita VR") = opcenitaVR
 tc2.Update
   
 tc.Close

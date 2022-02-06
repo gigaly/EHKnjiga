@@ -5,7 +5,7 @@ Public Function napravi_jednojezicnu_tablicu(NazivTablice As String)
 Dim struktura As String
 
 struktura = " ID Long, [Kosi oblik] Text(50), [Osnovni oblik] Text(50), " & _
-            " Oznaka Memo, [Vrsta rijeèi] Text(20), Promjena Text(20) "
+            " Oznaka Memo, [Vrsta rijeï¿½i] Text(20), Promjena Text(20) "
 
 Call napravi_tablicu(NazivTablice, struktura)
 End Function
@@ -19,7 +19,7 @@ Dim p() As String, i As Long
 fst.Charset = "utf-8"
 fst.Open
 fst.Type = adTypeText
-fst.LoadFromFile NazivDatoteke
+fst.LoadFromFile CurrentProject.Path & "\txt\" & NazivDatoteke
 fst.LineSeparator = adCRLF
 
 Set tc = CodeDb.OpenRecordset(NazivTablice)
@@ -28,17 +28,21 @@ Do While Not fst.EOS
   pom = fst.ReadText(-2)
   p = Split(pom, vbTab)
   i = i + 1
-  If i Mod 1000 = 0 Then Debug.Print (i)
+  If i Mod 1000 = 0 Then
+    Debug.Print (i)
+    DoEvents
+  End If
   If UBound(p) = 3 Then
     tc.AddNew
     tc("ID") = i
     tc("Kosi oblik") = p(0)
     tc("Osnovni oblik") = p(1)
     tc("Oznaka") = p(2)
-    tc("Vrsta rijeèi") = p(3)
+    tc("Vrsta rijeï¿½i") = p(3)
     tc.Update
   Else
-    Debug.Print i & ": " & pom
+    Debug.Print
+    Debug.Print "Datoteka: " & NazivDatoteke & "    Pogreï¿½ka u retku " & i & ": " & pom
   End If
 Loop
 End Function

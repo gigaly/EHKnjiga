@@ -145,7 +145,7 @@ Dim a As New ADODB.Stream, b As New ADODB.Stream
 a.Charset = "utf-8"
 a.Type = adTypeText
 a.Open
-a.WriteText ("Medo bere jagodešðèæž")
+a.WriteText ("Medo bere jagodeï¿½ï¿½ï¿½ï¿½")
 a.Position = 5
 a.SaveToFile "d:\brisati\a.txt", adSaveCreateOverWrite
 

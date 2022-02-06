@@ -4,10 +4,10 @@ Option Explicit
 Public Function popuni_opcenite_vr_koordinatiziranih_pojmova(jez As String)
 Dim SQLnaredba As String
 SQLnaredba = _
-  " UPDATE [Koordinatizirani %1% pojmovi] LEFT JOIN [Sve rijeèi iz %1% pojmova] AS B " & _
-  " ON [Koordinatizirani %1% pojmovi].Rijeè = B.Rijeè " & _
-  " SET [Koordinatizirani %1% pojmovi].[Opæenita vrata rijeèi] = [B].[Opæenita vrsta rijeèi], " & _
-  " [Koordinatizirani %1% pojmovi].[Opæenita VR] = [B].[Opæenita VR]; "
+  " UPDATE [Koordinatizirani %1% pojmovi] LEFT JOIN [Sve rijeï¿½i iz %1% pojmova] AS B " & _
+  " ON [Koordinatizirani %1% pojmovi].Rijeï¿½ = B.Rijeï¿½ " & _
+  " SET [Koordinatizirani %1% pojmovi].[Opï¿½enita vrata rijeï¿½i] = [B].[Opï¿½enita vrsta rijeï¿½i], " & _
+  " [Koordinatizirani %1% pojmovi].[Opï¿½enita VR] = [B].[Opï¿½enita VR]; "
 SQLnaredba = Replace(SQLnaredba, "%1%", jez)
 DoCmd.SetWarnings False
 DoCmd.RunSQL SQLnaredba
@@ -28,13 +28,13 @@ End Function
 Public Function dodijeli_statuse_u_EHTxt()
 Dim naredba As String
 DoCmd.SetWarnings False
-naredba = "UPDATE EH_Txt SET [Status HR] = 'NE' WHERE [Opæenita VR HR] Like '*[?]*';"
+naredba = "UPDATE EH_Txt SET [Status HR] = 'NE' WHERE [Opï¿½enita VR HR] Like '*[?]*';"
 Debug.Print "Status HR >> NE": DoCmd.RunSQL (naredba)
-naredba = "UPDATE EH_Txt SET [Status EN] = 'NE' WHERE [Opæenita VR EN] Like '*[?]*';"
+naredba = "UPDATE EH_Txt SET [Status EN] = 'NE' WHERE [Opï¿½enita VR EN] Like '*[?]*';"
 Debug.Print "Status EN >> NE": DoCmd.RunSQL (naredba)
-naredba = "UPDATE EH_Txt SET [Status HR] = 'DA' WHERE [Opæenita VR HR] Not Like '*[?]*';"
+naredba = "UPDATE EH_Txt SET [Status HR] = 'DA' WHERE [Opï¿½enita VR HR] Not Like '*[?]*';"
 Debug.Print "Status HR >> DA": DoCmd.RunSQL (naredba)
-naredba = "UPDATE EH_Txt SET [Status EN] = 'DA' WHERE [Opæenita VR EN] Not Like '*[?]*';"
+naredba = "UPDATE EH_Txt SET [Status EN] = 'DA' WHERE [Opï¿½enita VR EN] Not Like '*[?]*';"
 Debug.Print "Status EN >> DA": DoCmd.RunSQL (naredba)
 DoCmd.SetWarnings True
 End Function
@@ -48,11 +48,11 @@ naredba = _
 " FROM ((EH_Txt LEFT JOIN HR_Txt " & _
 "   ON EH_Txt.Hrvatski = HR_Txt.[Kosi oblik]) " & _
 " LEFT JOIN HR_Txt AS HR_Txt_1 " & _
-"   ON (HR_Txt.[Vrsta rijeèi] = HR_Txt_1.[Vrsta rijeèi]) " & _
+"   ON (HR_Txt.[Vrsta rijeï¿½i] = HR_Txt_1.[Vrsta rijeï¿½i]) " & _
 "   AND (HR_Txt.[Osnovni oblik] = HR_Txt_1.[Osnovni oblik])) " & _
 " LEFT JOIN [Koordinatizirani HR pojmovi] " & _
-"   ON HR_Txt_1.[Kosi oblik] = [Koordinatizirani HR pojmovi].Rijeè " & _
-" WHERE EH_Txt.[Broj rijeèi HR]=1 AND [Koordinatizirani HR pojmovi].[ID prijevoda] Is Not Null " & _
+"   ON HR_Txt_1.[Kosi oblik] = [Koordinatizirani HR pojmovi].Rijeï¿½ " & _
+" WHERE EH_Txt.[Broj rijeï¿½i HR]=1 AND [Koordinatizirani HR pojmovi].[ID prijevoda] Is Not Null " & _
 " ORDER BY EH_Txt.ID, [Koordinatizirani HR pojmovi].[ID prijevoda];"
 DoCmd.RunSQL (naredba)
 End Function
@@ -63,34 +63,34 @@ Public Function generiraj_tablicu_1M(ehtxt As String, jezik1 As String, jezik2 A
 Dim naredba As String
 
 '''''naredba = _
-'''''" SELECT %3%_1_1.[Osnovni oblik] AS Natuknica, %3%_1_1.[Vrsta rijeèi], " & _
-'''''" [Koordinatizirani %3% pojmovi].Pojam AS %1%, %5%.[Opæenita vrsta rijeèi %3%], %5%.[Opæenita VR %3%], " & _
-'''''" [Koordinatizirani %3% pojmovi].Pojam2 AS %2%, %5%.[Opæenita vrsta rijeèi %4%], %5%.[Opæenita VR %4%], " & _
-'''''" %5%.[Broj rijeèi %3%], %5%.[Broj rijeèi %4%] " & _
+'''''" SELECT %3%_1_1.[Osnovni oblik] AS Natuknica, %3%_1_1.[Vrsta rijeï¿½i], " & _
+'''''" [Koordinatizirani %3% pojmovi].Pojam AS %1%, %5%.[Opï¿½enita vrsta rijeï¿½i %3%], %5%.[Opï¿½enita VR %3%], " & _
+'''''" [Koordinatizirani %3% pojmovi].Pojam2 AS %2%, %5%.[Opï¿½enita vrsta rijeï¿½i %4%], %5%.[Opï¿½enita VR %4%], " & _
+'''''" %5%.[Broj rijeï¿½i %3%], %5%.[Broj rijeï¿½i %4%] " & _
 '''''" INTO [%3%%4%_1-M] " & _
 '''''" FROM (%3%_1 AS %3%_1_1 " & _
 '''''"   LEFT JOIN (%3%_Txt AS %3%_Txt_1 " & _
-'''''"   LEFT JOIN [Koordinatizirani %3% pojmovi] ON %3%_Txt_1.[Kosi oblik] = [Koordinatizirani %3% pojmovi].Rijeè) " & _
-'''''"     ON (%3%_1_1.[Osnovni oblik] = %3%_Txt_1.[Osnovni oblik]) AND (%3%_1_1.[Vrsta rijeèi] = %3%_Txt_1.[Vrsta rijeèi])) " & _
+'''''"   LEFT JOIN [Koordinatizirani %3% pojmovi] ON %3%_Txt_1.[Kosi oblik] = [Koordinatizirani %3% pojmovi].Rijeï¿½) " & _
+'''''"     ON (%3%_1_1.[Osnovni oblik] = %3%_Txt_1.[Osnovni oblik]) AND (%3%_1_1.[Vrsta rijeï¿½i] = %3%_Txt_1.[Vrsta rijeï¿½i])) " & _
 '''''"   LEFT JOIN %5% ON [Koordinatizirani %3% pojmovi].[ID prijevoda] = %5%.ID " & _
-'''''" WHERE %5%.[Broj rijeèi %3%] >= 2 And [Koordinatizirani %3% pojmovi].ID Is Not Null " & _
+'''''" WHERE %5%.[Broj rijeï¿½i %3%] >= 2 And [Koordinatizirani %3% pojmovi].ID Is Not Null " & _
 '''''"   And %5%.[Status %4%] = 'DA' And %5%.[Status %3%] = 'DA' " & _
 '''''" ORDER BY %3%_1_1.[Osnovni oblik], [Koordinatizirani %3% pojmovi].Pojam; "
 
 
 
 naredba = _
-" SELECT %3%_1.[Osnovni oblik] AS Natuknica, %3%_1.[Vrsta rijeèi], " & _
-" [Koordinatizirani %3% pojmovi].Pojam AS %1%, %5%.[Opæenita vrsta rijeèi %3%], %5%.[Opæenita VR %3%], " & _
-" [Koordinatizirani %3% pojmovi].Pojam2 AS %2%, %5%.[Opæenita vrsta rijeèi %4%], %5%.[Opæenita VR %4%], " & _
-" %5%.[Broj rijeèi %3%], %5%.[Broj rijeèi %4%] " & _
+" SELECT %3%_1.[Osnovni oblik] AS Natuknica, %3%_1.[Vrsta rijeï¿½i], " & _
+" [Koordinatizirani %3% pojmovi].Pojam AS %1%, %5%.[Opï¿½enita vrsta rijeï¿½i %3%], %5%.[Opï¿½enita VR %3%], " & _
+" [Koordinatizirani %3% pojmovi].Pojam2 AS %2%, %5%.[Opï¿½enita vrsta rijeï¿½i %4%], %5%.[Opï¿½enita VR %4%], " & _
+" %5%.[Broj rijeï¿½i %3%], %5%.[Broj rijeï¿½i %4%] " & _
 " INTO [%3%%4%_1-M] " & _
 " FROM (%3%_1 " & _
 "   LEFT JOIN (%3%_Txt " & _
-"   LEFT JOIN [Koordinatizirani %3% pojmovi] ON %3%_Txt.[Kosi oblik] = [Koordinatizirani %3% pojmovi].Rijeè) " & _
-"     ON (%3%_1.[Osnovni oblik] = %3%_Txt.[Osnovni oblik]) AND (%3%_1.[Vrsta rijeèi] = %3%_Txt.[Vrsta rijeèi])) " & _
+"   LEFT JOIN [Koordinatizirani %3% pojmovi] ON %3%_Txt.[Kosi oblik] = [Koordinatizirani %3% pojmovi].Rijeï¿½) " & _
+"     ON (%3%_1.[Osnovni oblik] = %3%_Txt.[Osnovni oblik]) AND (%3%_1.[Vrsta rijeï¿½i] = %3%_Txt.[Vrsta rijeï¿½i])) " & _
 "   LEFT JOIN %5% ON [Koordinatizirani %3% pojmovi].[ID prijevoda] = %5%.ID " & _
-" WHERE %5%.[Broj rijeèi %3%] >= 2 And [Koordinatizirani %3% pojmovi].ID Is Not Null " & _
+" WHERE %5%.[Broj rijeï¿½i %3%] >= 2 And [Koordinatizirani %3% pojmovi].ID Is Not Null " & _
 "   And %5%.[Status %4%] = 'DA' And %5%.[Status %3%] = 'DA' " & _
 " ORDER BY %3%_1.[Osnovni oblik], [Koordinatizirani %3% pojmovi].Pojam; "
 
@@ -112,7 +112,7 @@ Public Function napravi_jez_1(jez As String, jj As String, jezik As String)
 ' call napravi_HR_1("HR", "EH", "Hrvatski")
 Dim naredba As String
 naredba = _
-  " SELECT DISTINCT %1%_Txt.[Osnovni oblik], %1%_Txt.[Vrsta rijeèi] " & _
+  " SELECT DISTINCT %1%_Txt.[Osnovni oblik], %1%_Txt.[Vrsta rijeï¿½i] " & _
   " INTO [%1% 1] " & _
   " FROM %2%_Txt LEFT JOIN %1%_Txt " & _
   "   ON %2%_Txt.%3% = %1%_Txt.[Kosi oblik] " & _

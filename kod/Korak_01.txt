@@ -8,9 +8,9 @@ Public Function napravi_tablicu_EHTxt()
 Dim struktura As String
 struktura = _
   " ID Integer, Engleski Text(50), Hrvatski Text(50), " & _
-  " [Broj rijeci HR] SmallInt, [Broj rijeci EN] SmallInt, " & _
-  " [Opcenita vrsta rijeci HR] Text(100), [Opcenita VR HR] Text(50), " & _
-  " [Opcenita vrsta rijeci EN] Text(100), [Opcenita VR EN] Text(50), " & _
+  " [Broj rijeï¿½i HR] SmallInt, [Broj rijeï¿½i EN] SmallInt, " & _
+  " [Opï¿½enita vrsta rijeï¿½i HR] Text(100), [Opï¿½enita VR HR] Text(50), " & _
+  " [Opï¿½enita vrsta rijeï¿½i EN] Text(100), [Opï¿½enita VR EN] Text(50), " & _
   " [Status EN] Text(10), [Status HR] Text(10) "
 Call napravi_tablicu("EH_Txt", struktura)
 
@@ -48,16 +48,16 @@ DoCmd.DeleteObject acTable, NazivTablice
 If Err.Number <> 0 Then
   Select Case Err.Number
     Case 2008  ' You can't delete the database object 'EN_Txt' while it's open.
-      poruka = "Pogreška: " & Err.Number & vbCrLf & Err.Description & vbCrLf & _
-               "Zatvorite tablicu " & NazivTablice & " i pokušajte ponovno"
+      poruka = "Pogreï¿½ka: " & Err.Number & vbCrLf & Err.Description & vbCrLf & _
+               "Zatvorite tablicu " & NazivTablice & " i pokuï¿½ajte ponovno"
       MsgBox (poruka)
       napravi_tablicu = 1
       GoTo van
     Case 7874  ' tablica ne postoji pa ga nije potrebno obrisati
-      Debug.Print "Nema tablice, ali to nije problem" ' ništa
+      Debug.Print "Nema tablice, ali to nije problem" ' niï¿½ta
       Err.Clear
     Case Else
-      MsgBox ("Pogreška: " & Err.Number & vbCrLf & Err.Description)
+      MsgBox ("Pogreï¿½ka: " & Err.Number & vbCrLf & Err.Description)
       napravi_tablicu = 3
       GoTo van
   End Select
@@ -69,7 +69,7 @@ SQLnaredba = Replace(SQLnaredba, "%2%", struktura)
 DoCmd.RunSQL (SQLnaredba)
 
 If Err.Number <> 0 Then
-  MsgBox ("Pogreška: " & Err.Number & vbCrLf & Err.Description)
+  MsgBox ("Pogreï¿½ka: " & Err.Number & vbCrLf & Err.Description)
   napravi_tablicu = 2
   GoTo van
 End If
