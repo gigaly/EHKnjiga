@@ -7,15 +7,13 @@ Program je napravljen u Microsoft Accessu, ali na način da je sav programski ko
 Najprije je potrebno U MS Access datoteku uvesti kopletan programski kod. Pokrene se (dvostrukim klikom) datoteka __EHKnjiga.accdb__ 
 Nakon toga se izvede naredba: __Database Tools > Visual Basic__
 
-Nakon toga se u prozoru za zadavanje naredbi (_Immediate Window_) upiše naredba 
+Nakon toga se u prozoru za zadavanje naredbi (_Immediate Window_) upišu ove tri naredbe 
 
 __Call LoadFromText(acModule, "Admin", CurrentProject.Path & "\kod\Admin.txt")__
 
-Nakon toga se u prozoru za zadavanje naredbi upišu redom naredbe:
+__Call Admin.dodaj_reference__
 
-__call dodaj_reference__
-
-__call uvezi_sve(11)__
+__Call Admin.uvezi_sve(11)__
 
 To je dosta za prvi puta. Možete analizrati kod, a ja nastavljam objašnjavati malo po malo
 
