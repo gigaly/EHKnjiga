@@ -1,14 +1,16 @@
 Option Compare Database
 Option Explicit
 
+
+
 Public Function napravi_tablicu_EHTxt()
 
 Dim struktura As String
 struktura = _
   " ID Integer, Engleski Text(50), Hrvatski Text(50), " & _
-  " [Broj rijeèi HR] SmallInt, [Broj rijeèi EN] SmallInt, " & _
-  " [Opæenita vrsta rijeèi HR] Text(100), [Opæenita VR HR] Text(50), " & _
-  " [Opæenita vrsta rijeèi EN] Text(100), [Opæenita VR EN] Text(50), " & _
+  " [Broj rijeci HR] SmallInt, [Broj rijeci EN] SmallInt, " & _
+  " [Opcenita vrsta rijeci HR] Text(100), [Opcenita VR HR] Text(50), " & _
+  " [Opcenita vrsta rijeci EN] Text(100), [Opcenita VR EN] Text(50), " & _
   " [Status EN] Text(10), [Status HR] Text(10) "
 Call napravi_tablicu("EH_Txt", struktura)
 
